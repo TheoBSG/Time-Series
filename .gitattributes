@@ -1,0 +1,2 @@
+*.txt filter=lfs diff=lfs merge=lfs -text
+Feature[[:space:]]Engineering,[[:space:]]Patterns[[:space:]]Extraction/fast_shapelets-main/fast_shapelets-main/data/StarLightCurves_TEST.txt filter=lfs diff=lfs merge=lfs -text
