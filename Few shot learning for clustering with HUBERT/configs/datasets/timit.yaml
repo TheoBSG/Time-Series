@@ -1,0 +1,59 @@
+dataset:
+  name: timit
+  source:
+    original_dataset: DARPA TIMIT Acoustic-Phonetic Continuous Speech Corpus
+    kaggle: mfekadu/darpa-timit-acousticphonetic-continuous-speech
+    type: real_audio
+  description: >
+    Reduced subset of the DARPA TIMIT dataset for few-shot speaker identification.
+    The original corpus contains recordings from 630 speakers across 8 US dialect
+    regions, with a total of 6,300 utterances.
+    For computational efficiency and fair comparison with other datasets,
+    we construct a reduced speaker-balanced subset.
+
+  task:
+    type: speaker_identification
+    setting: few_shot_learning
+    input: raw_audio
+    output: speaker_id
+
+  audio:
+    format: wav
+    sample_rate: 16000
+    channels: mono
+    duration: fixed
+    max_length_samples: 16000
+    normalization: mean_std
+
+  classes:
+    definition: speaker_id
+    num_classes: 10
+    selection: random_speakers
+    source_split: TRAIN
+
+  split:
+    construction: balanced_sampling
+    total_samples: 1000
+    samples_per_class: ~100
+    strategy: random_sampling_per_speaker
+    seed: 42
+
+  preprocessing:
+    - resample_to_16kHz
+    - convert_to_mono
+    - pad_or_truncate
+    - waveform_normalization
+
+  usage:
+    benchmark:
+      few_shot:
+        n_way: 5
+        k_shot: [1, 5]
+        n_query: 10
+        episodic: true
+
+  notes:
+    - Only the TRAIN split is used to avoid speaker leakage.
+    - Speaker identity is treated as a categorical class.
+    - Dialect region labels are not used explicitly.
+    - Subsampling ensures comparable scale with other few-shot benchmarks.
