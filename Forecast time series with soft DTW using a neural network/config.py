@@ -1,0 +1,1 @@
+DIRNAME =  "/Users/ilan/sdtw_data/UCR_TS_Archive_2015"
